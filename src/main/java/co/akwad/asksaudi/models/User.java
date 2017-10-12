@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -39,12 +39,12 @@ public class User {
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column(name = "FIRSTNAME", length = 50)
+    @Column(name = "FIRST_NAME", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String firstname;
 
-    @Column(name = "LASTNAME", length = 50)
+    @Column(name = "LAST_NAME", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String lastname;
@@ -54,14 +54,14 @@ public class User {
     @Size(min = 4, max = 50)
     private String email;
 
-    @Column(name = "ENABLED")
-    @NotNull
-    private Boolean enabled;
-
-    @Column(name = "LASTPASSWORDRESETDATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date lastPasswordResetDate;
+//    @Column(name = "ENABLED")
+//    @NotNull
+//    private Boolean enabled;
+//
+//    @Column(name = "LASTPASSWORDRESETDATE")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @NotNull
+//    private Date lastPasswordResetDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -118,13 +118,13 @@ public class User {
         this.email = email;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+//    public Boolean getEnabled() {
+//        return enabled;
+//    }
+//
+//    public void setEnabled(Boolean enabled) {
+//        this.enabled = enabled;
+//    }
 
     public List<Authority> getAuthorities() {
         return authorities;
@@ -134,11 +134,11 @@ public class User {
         this.authorities = authorities;
     }
 
-    public Date getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
-
-    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
+//    public Date getLastPasswordResetDate() {
+//        return lastPasswordResetDate;
+//    }
+//
+//    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+//        this.lastPasswordResetDate = lastPasswordResetDate;
+//    }
 }

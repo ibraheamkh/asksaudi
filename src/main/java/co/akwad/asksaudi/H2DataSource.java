@@ -23,7 +23,7 @@ public class H2DataSource {
 	public DataSource dataSource() {
 
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.H2).addScript("db/init.sql").build();
+		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.H2).addScript("db/schema.sql").addScript("db/data.sql").build();
 		return db;
 
 	}

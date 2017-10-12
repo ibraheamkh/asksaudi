@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
 public class WebConfig {
 	 
 	
-	@Bean
-	ServletRegistrationBean h2servletRegistration(){
-	  
-	          ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
-	  
-	          registrationBean.addUrlMappings("/console/*");
-	  
-	          return registrationBean;
-	  
-	      }
+//	@Bean
+//	ServletRegistrationBean h2servletRegistration(){
+//	  
+//	          ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+//	  
+//	          registrationBean.addUrlMappings("/console/*");
+//	  
+//	          return registrationBean;
+//	  
+//	      }
 
 
 }

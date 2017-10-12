@@ -1,5 +1,6 @@
 package co.akwad.asksaudi.auth;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +24,8 @@ public final class JwtUserFactory {
                 user.getEmail(),
                 user.getPassword(),
                 mapToGrantedAuthorities(user.getAuthorities()),
-                user.getEnabled(),
-                user.getLastPasswordResetDate()
+                true, //FIXME : Dont hardcode these values, add them later
+               new Date()
         );
     }
 

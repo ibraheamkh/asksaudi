@@ -26,7 +26,7 @@ import co.akwad.asksaudi.auth.JwtAuthenticationTokenFilter;
 @ComponentScan("co.akwad.asksaudi")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -87,6 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // disable page caching
         httpSecurity.headers().cacheControl();
+        
+        //TODO: remove this when moving to production db
+        
+        //workaround to solve h2 console problem 
+        httpSecurity.headers().frameOptions().sameOrigin();
     }
     
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
