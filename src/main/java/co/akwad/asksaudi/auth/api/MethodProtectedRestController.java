@@ -1,4 +1,4 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

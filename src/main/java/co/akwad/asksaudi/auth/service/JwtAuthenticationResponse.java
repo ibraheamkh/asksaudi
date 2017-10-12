@@ -1,4 +1,4 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth.service;
 
 import java.io.Serializable;
 

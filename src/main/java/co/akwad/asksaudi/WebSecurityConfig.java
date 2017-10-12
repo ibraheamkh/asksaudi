@@ -3,8 +3,11 @@ package co.akwad.asksaudi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,20 +18,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import co.akwad.auth.JwtAuthenticationEntryPoint;
-import co.akwad.auth.JwtAuthenticationTokenFilter;
 
-@SuppressWarnings("SpringJavaAutowiringInspection")
+import co.akwad.asksaudi.auth.JwtAuthenticationEntryPoint;
+import co.akwad.asksaudi.auth.JwtAuthenticationTokenFilter;
+
 @Configuration
+@ComponentScan("co.akwad.asksaudi")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -39,21 +45,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    	//FIXME : 4 is the strength of the hash, consider changing it
+        return new BCryptPasswordEncoder(4);
     }
 
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationTokenFilter();
     }
-
+    
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 // we don't need CSRF because our token is invulnerable
                 .csrf().disable()
 
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 
                 // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -71,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**","/h2/**","/console/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
@@ -80,5 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // disable page caching
         httpSecurity.headers().cacheControl();
+    }
+    
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

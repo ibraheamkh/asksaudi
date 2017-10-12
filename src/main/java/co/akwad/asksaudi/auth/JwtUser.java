@@ -1,4 +1,4 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth;
 
 import java.util.Collection;
 import java.util.Date;

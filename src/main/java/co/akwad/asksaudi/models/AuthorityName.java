@@ -1,4 +1,4 @@
-package co.akwad.models;
+package co.akwad.asksaudi.models;
 
 public enum AuthorityName {
     ROLE_USER, ROLE_ADMIN

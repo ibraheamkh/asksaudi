@@ -1,4 +1,4 @@
-package co.akwad.models;
+package co.akwad.asksaudi.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

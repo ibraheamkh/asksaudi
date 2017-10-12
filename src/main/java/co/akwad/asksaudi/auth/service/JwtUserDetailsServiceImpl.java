@@ -1,18 +1,19 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import co.akwad.models.User;
 
-import co.akwad.repositories.UserRepository;
+import co.akwad.asksaudi.auth.JwtUserFactory;
+import co.akwad.asksaudi.models.User;
+import co.akwad.asksaudi.repositories.UserRepository;
 
 /**
  * Created by stephan on 20.03.16.
  */
-@Service
+@Service("jwtUserDetailsServiceImpl")
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

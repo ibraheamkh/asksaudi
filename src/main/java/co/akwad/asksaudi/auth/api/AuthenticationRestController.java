@@ -1,4 +1,4 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +13,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.akwad.asksaudi.auth.JwtAuthenticationRequest;
+import co.akwad.asksaudi.auth.JwtTokenUtil;
+import co.akwad.asksaudi.auth.JwtUser;
+import co.akwad.asksaudi.auth.service.JwtAuthenticationResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,23 +42,36 @@ public class AuthenticationRestController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
-
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) {
+    	 log.info("username: " + authenticationRequest.getUsername() + " password: " + authenticationRequest.getPassword());
+    	 
+    	 Authentication authentication = null;
+    	 try {
         // Perform the security
-        final Authentication authentication = authenticationManager.authenticate(
+        authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
+                        bCryptPasswordEncoder.encode(authenticationRequest.getPassword())
                 )
         );
+    	 } catch (AuthenticationException e) {
+    		 log.error(e.getMessage());
+    	 }
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        
         // Reload password post-security so we can generate token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails, device);
-
+       
+        
+        
+        log.info("token: " + token);
         // Return the token
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }

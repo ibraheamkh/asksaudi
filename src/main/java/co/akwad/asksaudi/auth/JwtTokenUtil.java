@@ -1,4 +1,4 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package co.akwad.models;
+package co.akwad.asksaudi.models;
 
 import java.util.Date;
 import java.util.List;

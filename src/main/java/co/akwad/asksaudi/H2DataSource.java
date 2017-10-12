@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 
 @Configuration
+@ComponentScan("co.akwad.asksaudi")
 public class H2DataSource {
 
 	// jdbc:h2:mem:testdb

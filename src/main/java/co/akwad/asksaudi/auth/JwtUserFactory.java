@@ -1,12 +1,13 @@
-package co.akwad.auth;
+package co.akwad.asksaudi.auth;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import co.akwad.models.Authority;
-import co.akwad.models.User;
+
+import co.akwad.asksaudi.models.Authority;
+import co.akwad.asksaudi.models.User;
 
 public final class JwtUserFactory {
 
