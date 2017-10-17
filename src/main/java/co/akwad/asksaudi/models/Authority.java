@@ -2,11 +2,14 @@ package co.akwad.asksaudi.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.List;
 
 @Entity
-@Table(name = "AUTHORITIES")
-public class Authority {
+@Table(name = "AUTHORITY")
+public class Authority implements GrantedAuthority{
 
     @Id
     @Column(name = "ID")
@@ -21,8 +24,24 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
+    
+    
 
-    public Long getId() {
+    public Authority() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+    
+
+	public Authority(@NotNull AuthorityName name) {
+		super();
+		this.name = name;
+	}
+
+
+
+	public Long getId() {
         return id;
     }
 
@@ -45,4 +64,10 @@ public class Authority {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+	@Override
+	public String getAuthority() {
+		// TODO Auto-generated method stub
+		return this.getName().name();
+	}
 }

@@ -1,4 +1,4 @@
-package co.akwad.asksaudi.auth.service;
+package co.akwad.asksaudi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +13,8 @@ import co.akwad.asksaudi.repositories.UserRepository;
 /**
  * Created by stephan on 20.03.16.
  */
-@Service("jwtUserDetailsServiceImpl")
-public class JwtUserDetailsServiceImpl implements UserDetailsService {
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;

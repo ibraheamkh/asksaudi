@@ -15,17 +15,17 @@ public final class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(User user) {
-        return new JwtUser(
+    public static User create(User user) {
+        return new User(
                 user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),
                 user.getEmail(),
                 user.getPassword(),
-                mapToGrantedAuthorities(user.getAuthorities()),
-                true, //FIXME : Dont hardcode these values, add them later
-               new Date()
+                user.getEnabled(), 
+               user.getLastPasswordResetDate(),
+               user.getAuthorities()
         );
     }
 

@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.akwad.asksaudi.auth.JwtAuthenticationRequest;
 import co.akwad.asksaudi.auth.JwtTokenUtil;
-import co.akwad.asksaudi.auth.JwtUser;
 import co.akwad.asksaudi.auth.service.JwtAuthenticationResponse;
+import co.akwad.asksaudi.models.User;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,7 +80,7 @@ public class AuthenticationRestController {
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        User user = (User) userDetailsService.loadUserByUsername(username);
 
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);

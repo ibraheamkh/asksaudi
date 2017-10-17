@@ -40,10 +40,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         
         log.info("Current User: " + username);
 
-        logger.info("checking authentication für user " + username);
+        logger.info("checking authentication for user " + username);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
+        	log.info("Security Context is null");
+        	
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

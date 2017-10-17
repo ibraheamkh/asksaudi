@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.akwad.asksaudi.auth.JwtTokenUtil;
-import co.akwad.asksaudi.auth.JwtUser;
+import co.akwad.asksaudi.models.User;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,10 +25,10 @@ public class UserRestController {
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
-    public JwtUser getAuthenticatedUser(HttpServletRequest request) {
+    public User getAuthenticatedUser(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        User user = (User) userDetailsService.loadUserByUsername(username);
         return user;
     }
 

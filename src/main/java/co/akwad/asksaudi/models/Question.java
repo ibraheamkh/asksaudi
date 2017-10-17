@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "QUESTION")
 public class Question {
@@ -17,18 +19,23 @@ public class Question {
 	
 	@Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_seq")
-    @SequenceGenerator(name = "question_seq", sequenceName = "question_seq", allocationSize = 1)
 	private long id;
+	
+	
+	@Column(name = "USER_ID")
+	@JsonProperty("user_id")
+	private long userID;
 	
 	@Column(name = "TITLE", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
+	@JsonProperty("title")
 	private String title;
 	
 	@Column(name = "QUESTION_BODY", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
+	@JsonProperty("question_body")
 	private String questionBody;
 
 	public long getId() {
@@ -56,6 +63,16 @@ public class Question {
 	}
 	
 	
+	
+	
+	public long getUserID() {
+		return userID;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
+
 	public Question(){
 		super();
 	}
