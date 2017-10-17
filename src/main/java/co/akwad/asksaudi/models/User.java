@@ -39,6 +39,7 @@ public class User implements UserDetails{
 
 	@Id
     @Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "USERNAME", length = 50, unique = true)
